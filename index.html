@@ -154,6 +154,14 @@
             border-radius: 0 8px 8px 0;
         }
 
+        .password-box {
+            background-color: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
         .success-box {
             background-color: #f0fff4;
             border-left: 5px solid var(--secondary-color);
@@ -288,7 +296,7 @@
                 print-color-adjust: exact;
             }
 
-            .info-box, .warning-box, .success-box, .recommendation-box, .license-box {
+            .info-box, .warning-box, .success-box, .recommendation-box, .password-box, .license-box {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
@@ -549,8 +557,8 @@
         <h1>EterTICs V13 Mbojera</h1>
         <p style="font-size: 1.5em; margin: 20px 0;">Guía Completa para Crear una Radio y Televisora Comunitaria con Software Libre</p>
         <p>Manual Tutorial para Proyectos Comunitarios</p>
-        <p style="margin-top: 30px; font-size: 0.9em;">Versión 1.0 - 2026</p>
-        <p style="margin-top: 10px; font-size: 0.8em;">Incluye: Streaming de Video + DNS Dinámico + Hardware Libre + PeerTube/FTV + Bibliografía</p>
+        <p style="margin-top: 30px; font-size: 0.9em;">Versión 4.2 - 2026</p>
+        <p style="margin-top: 10px; font-size: 0.8em;">Incluye: Streaming de Video + DNS Dinámico + Hardware Libre + PeerTube/FTV + Telegram + Bibliografía</p>
     </div>
 
     <!-- Tabla de Contenidos -->
@@ -628,12 +636,12 @@
 
         <h3>Parte A: Creación del Medio de Arranque</h3>
 
-        <p>Este es el primer paso indispensable. Necesitarás descargar la imagen de 'EterTICs V13 Mbojera' y grabarla en tu USB o DVD.</p>
+        <p>Este es el primer paso indispensable. Necesitarás <a href="https://gnuetertics.org/descargar/" target="_blank">descargar la imagen de 'EterTICs V13 Mbojera'</a> y grabarla en tu USB o DVD.</p>
 
         <h4>Pasos para crear el USB de arranque:</h4>
 
         <ol>
-            <li><strong>Descarga la Imagen:</strong> Visita el sitio web oficial de 'EterTICs' y descarga la versión adecuada para tu arquitectura (generalmente <code>amd64</code>).</li>
+            <li><strong>Descarga la Imagen:</strong> Visita el <a href="https://gnuetertics.org/descargar/" target="_blank">sitio web oficial de 'EterTICs'</a> y descarga la versión adecuada para tu arquitectura (generalmente <code>amd64</code>).</li>
             
             <li><strong>Preparar el USB:</strong> Conecta tu unidad USB. <span class="note">⚠️ Todos los datos se borrarán, haz copia de seguridad.</span></li>
             
@@ -644,6 +652,128 @@
                     <li><strong>Terminal (Linux/macOS):</strong>
                         <pre><code>sudo dd if=/ruta/a/tu/etertics-v13.iso of=/dev/sdX bs=4M status=progress && sync</code></pre>
                         <span class="note">Reemplaza /dev/sdX con el nombre correcto de tu USB.</span>
+                    <li><strong>Ventoy (Multiplataforma):</strong> <span class="badge badge-recommended">RECOMENDADO (Múltiples ISOs en un USB)</span></li>
+
+<div class="info-box">
+    <strong>💡 ¿Por Qué Ventoy?</strong><br>
+    <p>Ventoy es una herramienta revolucionaria que te permite:</p>
+    <ul>
+        <li>✅ Copiar múltiples ISOs en un solo USB (EterTICs, Ubuntu, Windows, etc.)</li>
+        <li>✅ Elegir qué ISO arrancar desde un menú al iniciar</li>
+        <li>✅ No需要 formatear el USB cada vez que quieras cambiar de ISO</li>
+        <li>✅ Simplemente copiar y pegar archivos .iso al USB</li>
+        <li>✅ Ideal para laboratorios de informática y soporte técnico</li>
+    </ul>
+</div>
+
+<h5>Paso 1: Descargar Ventoy</h5>
+<pre><code># Visita el sitio oficial
+https://www.ventoy.net
+
+# O descarga desde terminal (versión Linux)
+cd ~/Descargas
+wget https://github.com/ventoy/Ventoy/releases/download/v1.0.96/ventoy-1.0.96-linux.tar.gz
+tar -xvzf ventoy-1.0.96-linux.tar.gz
+cd ventoy-1.0.96</code></pre>
+
+<h5>Paso 2: Instalar Ventoy en el USB</h5>
+<div class="warning-box">
+    <strong>⚠️ ADVERTENCIA:</strong> Esto borrará TODOS los datos del USB. Haz copia de seguridad primero.
+</div>
+<pre><code># Identifica tu USB (ej: /dev/sdb)
+lsblk
+
+# Instalar Ventoy en el USB (REEMPLAZA /dev/sdX con tu dispositivo)
+sudo ./Ventoy2Disk.sh -i /dev/sdX
+
+# Ejemplo real (si tu USB es /dev/sdb):
+sudo ./Ventoy2Disk.sh -i /dev/sdb
+
+# Espera a que termine el proceso...
+# Verás: "Install Ventoy Success"</code></pre>
+
+<h5>Paso 3: Copiar las ISOs</h5>
+<pre><code># Una vez instalado, el USB aparecerá como "Ventoy"
+# Simplemente copia las ISOs al USB:
+
+cp ~/Descargas/etertics-v13-mbojera.iso /media/ventoy/
+cp ~/Descargas/ubuntu-22.04.iso /media/ventoy/
+cp ~/Descargas/windows10.iso /media/ventoy/
+
+# O usa el administrador de archivos (Thunar, Nautilus, etc.)
+# Arrastra y suelta las ISOs a la unidad Ventoy</code></pre>
+
+<h5>Paso 4: Arrancar desde el USB</h5>
+<ol>
+    <li>Conecta el USB en la PC donde instalarás EterTICs</li>
+    <li>Enciende la PC y presiona la tecla de arranque (F12, F10, ESC, etc.)</li>
+    <li>Selecciona el USB Ventoy del menú de arranque</li>
+    <li><strong>Verás un menú con todas las ISOs disponibles</strong></li>
+    <li>Selecciona "EterTICs V13 Mbojera" y presiona Enter</li>
+    <li>¡Listo! El sistema arrancará desde la ISO seleccionada</li>
+</ol>
+
+<div class="recommendation-box">
+    <strong>🏆 Ventajas de Ventoy para Escuelas</strong>
+    <table>
+        <thead>
+            <tr>
+                <th>Ventaja</th>
+                <th>Beneficio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Múltiples ISOs</td>
+                <td>Un solo USB para EterTICs, Ubuntu, Windows, herramientas de rescate</td>
+            </tr>
+            <tr>
+                <td>Sin formatear</td>
+                <td>Añade o quita ISOs cuando quieras sin reinstalar Ventoy</td>
+            </tr>
+            <tr>
+                <td>Actualización fácil</td>
+                <td>Descarga nueva ISO, copia al USB, listo</td>
+            </tr>
+            <tr>
+                <td>Persistencia</td>
+                <td>Soporta archivos de persistencia para guardar cambios</td>
+            </tr>
+            <tr>
+                <td>Compatible</td>
+                <td>Funciona con BIOS Legacy y UEFI</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h5>Paso 5: Actualizar Ventoy (Opcional)</h5>
+<pre><code># Para actualizar Ventoy sin perder las ISOs
+sudo ./Ventoy2Disk.sh -u /dev/sdX
+
+# Esto actualiza el bootloader pero mantiene tus ISOs</code></pre>
+
+<h5>Consejos Adicionales</h5>
+<div class="success-box">
+    <strong>📌 Mejores Prácticas con Ventoy</strong>
+    <ul>
+        <li><strong>USB recomendado:</strong> Mínimo 16 GB para múltiples ISOs (32 GB o más es ideal)</li>
+        <li><strong>Organización:</strong> Crea carpetas en el USB para organizar las ISOs (ej: /Linux/, /Windows/, /Herramientas/)</li>
+        <li><strong>Nombre de ISOs:</strong> Usa nombres cortos sin espacios (ej: etertics-v13.iso en vez de EterTICs V13 Mbojera.iso)</li>
+        <li><strong>Plugin de persistencia:</strong> Ventoy soporta archivos .dat de persistencia para guardar configuraciones</li>
+        <li><strong>Seguridad:</strong> Puedes proteger el menú de arranque con contraseña</li>
+    </ul>
+</div>
+
+<div class="info-box">
+    <strong>🔗 Recursos de Ventoy</strong><br>
+    <ul>
+        <li><strong>Sitio oficial:</strong> <a href="https://www.ventoy.net" target="_blank">https://www.ventoy.net</a></li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/ventoy/Ventoy" target="_blank">https://github.com/ventoy/Ventoy</a></li>
+        <li><strong>Documentación:</strong> <a href="https://www.ventoy.net/doc.html" target="_blank">https://www.ventoy.net/doc.html</a></li>
+        <li><strong>Lista de ISOs soportadas:</strong> <a href="https://www.ventoy.net/en/isolist.html" target="_blank">https://www.ventoy.net/en/isolist.html</a></li>
+    </ul>
+</div>
                     </li>
                 </ul>
             </li>
@@ -691,12 +821,12 @@
                 <tr>
                     <td>1</td>
                     <td>Descargar Imagen</td>
-                    <td>Obtener el archivo .iso desde el sitio web oficial</td>
+                    <td>Obtener el archivo .iso desde el <a href="https://gnuetertics.org/descargar/" target="_blank">sitio web oficial</a></td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>Preparar Soporte</td>
-                    <td>Grabar ISO en USB de 8 GB con Rufus/Etcher/dd</td>
+                    <td>Grabar ISO en USB de 8 GB con Rufus/Etcher/dd/Ventoy</td>
                 </tr>
                 <tr>
                     <td>3</td>
@@ -855,6 +985,38 @@ sudo umount ~/mount-point-eter-tic</code></pre>
 
         <p>Ya tienes 'EterTICs V13 Mbojera' instalado. Ahora necesitas llenar tu emisora de contenido, programar sus transmisiones y crear un puente de diálogo con tus oyentes.</p>
 
+        <!-- Cuadro de Contraseñas -->
+        <div class="password-box">
+            <h3>🔐 ¡Contraseñas Predeterminadas (CAMBIAR INMEDIATAMENTE)!</h3>
+            <table style="margin-top: 15px;">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>
+                        <th>Notas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Operador (modo vivo)</strong></td>
+                        <td><code>libre</code></td>
+                        <td>Sólo en modo Live USB. En instalación: la que definiste</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Root (modo vivo)</strong></td>
+                        <td><code>libertad</code></td>
+                        <td>Sólo en modo Live USB. En instalación: la que definiste</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Admin Icecast2</strong></td>
+                        <td><code>hackme</code></td>
+                        <td>⚠️ ¡CAMBIAR SIEMPRE! Acceso al servidor de streaming</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 15px; color: #c53030;"><strong>⚠️ IMPORTANTE:</strong> Cambia estas contraseñas inmediatamente después de la instalación. Son de conocimiento público y representan un riesgo de seguridad.</p>
+        </div>
+
         <h3>Configuración del Servidor de Streaming</h3>
 
         <ol>
@@ -887,6 +1049,111 @@ sudo umount ~/mount-point-eter-tic</code></pre>
         <h4>Flujo 3: Programación (Scheduler)</h4>
         <p>Crea un horario semanal con diferentes programas, asigna contenido y activa el cronograma para emisión autónoma.</p>
 
+        <!-- Conexión de Micrófonos -->
+        <h3>Conexión de Micrófonos y Ajustes para Transmisión en Vivo</h3>
+
+        <div class="info-box">
+            <strong>🎙️ Tipos de Conexión de Micrófono</strong>
+            <ul>
+                <li><strong>USB:</strong> Plug & play, ideal para principiantes</li>
+                <li><strong>Jack 3.5mm:</strong> Entrada de micrófono de la PC</li>
+                <li><strong>XLR:</strong> Requiere interfaz de audio o mezcladora externa</li>
+            </ul>
+        </div>
+
+        <h4>Paso 1: Conexión Física</h4>
+        <ol>
+            <li><strong>Micrófono USB:</strong> Conecta directamente a cualquier puerto USB libre</li>
+            <li><strong>Micrófono Jack 3.5mm:</strong> Conecta al puerto rosa (mic-in) de la PC</li>
+            <li><strong>Micrófono XLR:</strong> Conecta a interfaz de audio → USB → PC</li>
+        </ol>
+
+        <h4>Paso 2: Configurar Entrada de Audio en EterTICs</h4>
+        <pre><code># Abrir configuración de audio
+pavucontrol
+
+# O desde terminal
+alsamixer</code></pre>
+        <ol>
+            <li>En <strong>pavucontrol</strong>, ve a la pestaña "Dispositivos de entrada"</li>
+            <li>Selecciona tu micrófono de la lista</li>
+            <li>Ajusta el volumen de entrada (evita que llegue al rojo/clipping)</li>
+            <li>Prueba hablando y observa los medidores de nivel</li>
+        </ol>
+
+        <h4>Paso 3: Configurar OBS o Mezcladora para Streaming</h4>
+        <ol>
+            <li><strong>En OBS Studio:</strong>
+                <ul>
+                    <li>Añade fuente: "Captura de entrada de audio"</li>
+                    <li>Selecciona tu micrófono</li>
+                    <li>Ajusta niveles en el mezclador de OBS</li>
+                    <li>Activa filtros: Compresor, Ruido, Ganancia</li>
+                </ul>
+            </li>
+            <li><strong>En Mezcladora Hardware:</strong>
+                <ul>
+                    <li>Conecta salida principal a Line-in de la PC</li>
+                    <li>Ajusta ganancia de cada canal</li>
+                    <li>Usa ecualización para claridad vocal</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h4>Paso 4: Ajustes Recomendados para Voz</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parámetro</th>
+                    <th>Valor Recomendado</th>
+                    <th>Propósito</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nivel de Entrada</td>
+                    <td>-12dB a -6dB</td>
+                    <td>Evitar distorsión</td>
+                </tr>
+                <tr>
+                    <td>Compresor</td>
+                    <td>Ratio 3:1, Threshold -20dB</td>
+                    <td>Uniformizar volumen</td>
+                </tr>
+                <tr>
+                    <td>Reducción de Ruido</td>
+                    <td>-10dB a -15dB</td>
+                    <td>Eliminar ruido de fondo</td>
+                </tr>
+                <tr>
+                    <td>Ecualización</td>
+                    <td>Boost 2-4kHz, Cut &lt;100Hz</td>
+                    <td>Claridad vocal</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Paso 5: Prueba de Transmisión</h4>
+        <ol>
+            <li>Inicia el servidor Icecast</li>
+            <li>Configura OBS o tu mezcladora para enviar al stream</li>
+            <li>Inicia la transmisión de prueba</li>
+            <li>Abre otra PC o dispositivo y escucha tu stream</li>
+            <li>Ajusta niveles según sea necesario</li>
+            <li>¡Listo para transmitir en vivo!</li>
+        </ol>
+
+        <div class="warning-box">
+            <strong>⚠️ Consejos para Transmisión en Vivo</strong>
+            <ul>
+                <li>Siempre haz una prueba de audio antes de salir al aire</li>
+                <li>Mantén una distancia constante del micrófono (10-15 cm)</li>
+                <li>Usa pop filter para evitar explosivas (P, B, T)</li>
+                <li>Monitorea tu transmisión desde otro dispositivo</li>
+                <li>Ten un plan B (música de respaldo) por si hay problemas técnicos</li>
+            </ul>
+        </div>
+
         <h3>Interacción con la Audiencia</h3>
 
         <ul>
@@ -896,6 +1163,276 @@ sudo umount ~/mount-point-eter-tic</code></pre>
             <li><strong>Proyectos Participativos:</strong> Concursos, podcasts comunitarios, tiempo abierto.</li>
             <li><strong>Eventos en Vivo:</strong> Transmite reuniones, conciertos, partidos deportivos locales.</li>
         </ul>
+
+        <!-- NUEVA SECCIÓN: TELEGRAM -->
+        <h3>Transmitir tu Radio en Telegram <span class="badge badge-free">GRATIS</span> <span class="badge badge-recommended">RECOMENDADO</span></h3>
+
+        <div class="info-box">
+            <strong>📱 ¿Por Qué Telegram para tu Radio?</strong><br>
+            <p>Telegram es una de las aplicaciones de mensajería más usadas en Latinoamérica. Transmitir tu radio por Telegram te permite:</p>
+            <ul>
+                <li>✅ Llegar a oyentes directamente en sus celulares</li>
+                <li>✅ Enviar notificaciones cuando sales al aire</li>
+                <li>✅ Tener chat integrado para comentarios en vivo</li>
+                <li>✅ Grabar automáticamente todos los programas</li>
+                <li>✅ Funcionar incluso con conexiones lentas de internet</li>
+            </ul>
+        </div>
+
+        <h4>Diagrama de Flujo: Radio → Telegram</h4>
+
+        <div class="diagram-container">
+            <svg viewBox="0 0 800 200" class="hardware-diagram">
+                <rect width="800" height="200" fill="#f7fafc" stroke="#e2e8f0" stroke-width="2"/>
+                
+                <rect x="50" y="70" width="140" height="60" fill="#c53030" stroke="#2d3748" stroke-width="2"/>
+                <text x="120" y="95" text-anchor="middle" fill="white" font-size="11">EterTICs</text>
+                <text x="120" y="115" text-anchor="middle" fill="white" font-size="9">(Icecast Stream)</text>
+                
+                <rect x="280" y="70" width="140" height="60" fill="#3182ce" stroke="#2d3748" stroke-width="2"/>
+                <text x="350" y="95" text-anchor="middle" fill="white" font-size="11">Bot de Telegram</text>
+                <text x="350" y="115" text-anchor="middle" fill="white" font-size="9">(FFmpeg/OBS)</text>
+                
+                <rect x="510" y="70" width="140" height="60" fill="#38a169" stroke="#2d3748" stroke-width="2"/>
+                <text x="580" y="95" text-anchor="middle" fill="white" font-size="11">Canal Telegram</text>
+                <text x="580" y="115" text-anchor="middle" fill="white" font-size="9">(Oyentes)</text>
+                
+                <line x1="190" y1="100" x2="280" y2="100" stroke="#2d3748" stroke-width="2"/>
+                <polygon points="280,100 270,95 270,105" fill="#2d3748"/>
+                <text x="235" y="90" text-anchor="middle" fill="#2d3748" font-size="9">Stream Audio/Video</text>
+                
+                <line x1="420" y1="100" x2="510" y2="100" stroke="#2d3748" stroke-width="2"/>
+                <polygon points="510,100 500,95 500,105" fill="#2d3748"/>
+                <text x="465" y="90" text-anchor="middle" fill="#2d3748" font-size="9">Voice/Video Messages</text>
+            </svg>
+            <p class="diagram-caption">Figura 6: Flujo de transmisión desde EterTICs hacia Telegram</p>
+        </div>
+
+        <h4>Paso 1: Crear un Bot de Telegram</h4>
+        <ol>
+            <li>Abre Telegram y busca a <strong>@BotFather</strong></li>
+            <li>Envía el comando <code>/newbot</code></li>
+            <li>BotFather te pedirá un nombre para tu bot (ej: "Radio Comunitaria Bot")</li>
+            <li>Luego te pedirá un username (debe terminar en <code>bot</code>, ej: <code>miradiocomunitariabot</code>)</li>
+            <li>BotFather te dará un <strong>TOKEN</strong> (cadena larga de caracteres)</li>
+            <li><strong>Guarda ese TOKEN</strong> en lugar seguro</li>
+        </ol>
+
+        <div class="warning-box">
+            <strong>⚠️ Seguridad: Protege tu TOKEN</strong><br>
+            <ul>
+                <li>NUNCA compartas tu TOKEN públicamente</li>
+                <li>Quien tenga el TOKEN controla tu bot</li>
+                <li>Si lo comprometes, revócalo con @BotFather y genera uno nuevo</li>
+            </ul>
+        </div>
+
+        <h4>Paso 2: Crear un Canal o Grupo</h4>
+        <ol>
+            <li>En Telegram, crea un <strong>Nuevo Canal</strong> (recomendado para solo audio) o <strong>Grupo</strong> (si quieres chat de oyentes)</li>
+            <li>Configura el nombre y descripción de tu canal</li>
+            <li>Haz el canal <strong>Público</strong> para que cualquiera pueda encontrarlo, o <strong>Privado</strong> para acceso restringido</li>
+            <li>Añade tu bot como <strong>Administrador</strong> del canal</li>
+        </ol>
+
+        <h4>Paso 3: Obtener el Chat ID del Canal</h4>
+        <pre><code># Envía un mensaje a tu canal
+# Luego visita esta URL en tu navegador (reemplaza TOKEN):
+https://api.telegram.org/botTU_TOKEN/getUpdates
+
+# Busca el "chat" en la respuesta JSON
+# El "id" es tu Chat ID (puede ser negativo, ej: -1001234567890)</code></pre>
+
+        <h4>Paso 4: Obtener URL de Streaming de Telegram</h4>
+        <pre><code># Para obtener la URL de tu servidor RTMP de Telegram:
+# 1. Abre tu canal en Telegram
+# 2. Haz clic en el nombre del canal (arriba)
+# 3. Selecciona "Transmitir en vivo" o "Live Stream"
+# 4. Copia la URL del servidor y la clave de stream
+
+# Formato típico:
+# URL Servidor: rtmp://live.telegram.org/stream
+# Clave: TU_CLAVE_UNICA</code></pre>
+
+        <h4>Método 1: Transmitir Archivos de Audio/Video Pre-grabados</h4>
+
+        <div class="info-box">
+            <strong>📹 Formatos Soportados</strong><br>
+            Audio: MP3, M4A, AAC, OGG | Video: MP4, MKV, AVI, FLV, MPEG
+        </div>
+
+        <pre><code># Comando FFmpeg para transmitir archivos a Telegram
+# Reemplaza los valores entre comillas con tus datos reales
+
+nohup ffmpeg -i "CARPETA/NOMBREARCHIVO.{mp3,m4a,aac,mkv,mpeg,mp4,avi,flv}" \
+  -ab 64K \
+  -codec:a aac \
+  -codec:v libx264 \
+  -pix_fmt yuv420p \
+  -f flv \
+  -preset ultrafast \
+  "URLSERVIDORTELEGRAM/KEYTELEGRAM" &
+
+# Ejemplo real:
+nohup ffmpeg -i "/home/usuario/Music/programa1.mp3" \
+  -ab 64K \
+  -codec:a aac \
+  -codec:v libx264 \
+  -pix_fmt yuv420p \
+  -f flv \
+  -preset ultrafast \
+  "rtmp://live.telegram.org/stream/TU_CLAVE_UNICA" &
+
+# Para detener la transmisión:
+pkill ffmpeg</code></pre>
+
+        <h4>Método 2: Transmitir Video en Vivo desde Cámara Web</h4>
+
+        <div class="success-box">
+            <strong>🎥 Ideal para programas en vivo con video</strong><br>
+            Este método captura video directamente de tu webcam y lo transmite en tiempo real a Telegram.
+        </div>
+
+        <pre><code># Opción A: Usando FFmpeg con webcam
+nohup ffmpeg -f v4l2 -input_format mjpeg -video_size 1280x720 -framerate 30 \
+  -i /dev/video0 \
+  -f alsa -i default \
+  -c:v libx264 -preset ultrafast -b:v 2500k \
+  -c:a aac -b:a 64k \
+  -pix_fmt yuv420p \
+  -f flv \
+  "URLSERVIDORTELEGRAM/KEYTELEGRAM" &
+
+# Opción B: Usando OBS Studio (Recomendado para video)
+# 1. Abre OBS Studio
+# 2. Añade fuente: "Dispositivo de captura de video" (tu webcam)
+# 3. Añade fuente: "Captura de entrada de audio" (tu micrófono)
+# 4. Configuración → Emisión:
+#    - Servicio: Personalizado
+#    - Servidor: rtmp://live.telegram.org/stream
+#    - Clave: TU_CLAVE_UNICA
+# 5. Haz clic en "Iniciar Transmisión"
+
+# Opción C: Usando Red5 Server + OBS
+# 1. Configura Red5 como se explica en Anexo II
+# 2. En OBS, configura la transmisión hacia Red5
+# 3. Red5 puede retransmitir a Telegram mediante FFmpeg
+</code></pre>
+
+        <h4>Método 3: Transmitir desde Icecast (Radio Audio)</h4>
+
+        <pre><code># Script Python para capturar Icecast y enviar a Telegram
+# Guarda como telegram_icecast.py
+
+#!/usr/bin/env python3
+import subprocess
+import time
+
+TELEGRAM_URL = "rtmp://live.telegram.org/stream/TU_CLAVE"
+ICECAST_URL = "http://localhost:8000/stream.ogg"
+
+while True:
+    try:
+        subprocess.run([
+            "ffmpeg",
+            "-i", ICECAST_URL,
+            "-c:a", "aac",
+            "-b:a", "64k",
+            "-f", "flv",
+            TELEGRAM_URL
+        ])
+    except KeyboardInterrupt:
+        break
+    time.sleep(5)
+
+# Ejecutar:
+python3 telegram_icecast.py</code></pre>
+
+        <div class="recommendation-box">
+            <strong>🏆 Comparación de Métodos para Telegram</strong>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Tipo</th>
+                        <th>Dificultad</th>
+                        <th>En Vivo</th>
+                        <th>Recomendado para</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>FFmpeg Archivos</td>
+                        <td>Audio/Video</td>
+                        <td>⭐⭐ Media</td>
+                        <td>❌ Pre-grabado</td>
+                        <td>Programas editados</td>
+                    </tr>
+                    <tr>
+                        <td>FFmpeg Webcam</td>
+                        <td>Video</td>
+                        <td>⭐⭐⭐ Avanzada</td>
+                        <td>✅ Sí</td>
+                        <td>Transmisiones simples</td>
+                    </tr>
+                    <tr>
+                        <td>OBS Studio</td>
+                        <td>Video</td>
+                        <td>⭐⭐ Fácil</td>
+                        <td>✅ Sí</td>
+                        <td>✅ Mayoría de casos</td>
+                    </tr>
+                    <tr>
+                        <td>Icecast → Telegram</td>
+                        <td>Audio</td>
+                        <td>⭐⭐⭐ Avanzada</td>
+                        <td>✅ Sí</td>
+                        <td>Radio 24/7</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Consejos para tu Radio/TV en Telegram</h4>
+
+        <div class="success-box">
+            <strong>📱 Mejores Prácticas</strong>
+            <ul>
+                <li><strong>Segmenta tu stream:</strong> Envía segmentos de 5-10 minutos (no archivos de 1 hora)</li>
+                <li><strong>Anuncia programas:</strong> Usa el bot para avisar cuándo sales al aire</li>
+                <li><strong>Interactúa:</strong> Responde comentarios de los oyentes en el chat</li>
+                <li><strong>Hashtags:</strong> Usa #EnVivo #ProgramaX para organizar contenido</li>
+                <li><strong>Enlace de invitación:</strong> Comparte el enlace t.me/tucanal en redes sociales</li>
+                <li><strong>Fija mensajes:</strong> Fija la programación semanal en el canal</li>
+                <li><strong>Calidad de video:</strong> Para Telegram, 720p es suficiente (ahorra datos)</li>
+                <li><strong>Calidad de audio:</strong> 64-128 kbps es ideal para voz/música</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <strong>📊 Estadísticas de Telegram para Radios</strong>
+            <ul>
+                <li><strong>Usuarios activos:</strong> Más de 800 millones mundialmente</li>
+                <li><strong>Penetración en Venezuela:</strong> ~60% de usuarios de smartphone</li>
+                <li><strong>Consumo de datos:</strong> ~1 MB por minuto de audio (64 kbps)</li>
+                <li><strong>Consumo de video:</strong> ~5 MB por minuto (720p)</li>
+                <li><strong>Miembros por canal:</strong> Ilimitado (puedes tener miles de oyentes)</li>
+                <li><strong>Duración máxima:</strong> Videos hasta 2 GB por archivo</li>
+            </ul>
+        </div>
+
+        <div class="success-box">
+            <strong>🎉 ¡Tu Radio/TV Ahora Está en Todas Partes!</strong><br>
+            <p>Con Telegram, tus oyentes pueden:</p>
+            <ul>
+                <li>✅ Escuchar/ver desde el celular sin abrir el navegador</li>
+                <li>✅ Recibir notificaciones cuando sales al aire</li>
+                <li>✅ Comentar y compartir programas fácilmente</li>
+                <li>✅ Escuchar/ver programas grabados cuando quieran</li>
+            </ul>
+            <p><strong>¡Combina web stream + Telegram + PeerTube para máximo alcance!</strong></p>
+        </div>
 
         <div class="success-box">
             <strong>🌟 Recuerda</strong><br>
@@ -1369,6 +1906,112 @@ chmod +x mediamtx</code></pre>
             Abrir puertos expone tu servidor. Asegúrate de configurar contraseñas en el archivo .yml
         </div>
 
+        <h3>5.1 Transmisión de Videos Pre-grabados desde el Equipo</h3>
+
+        <div class="info-box">
+            <strong>📹 ¿Por qué transmitir videos pre-grabados?</strong><br>
+            <ul>
+                <li>✅ Contenido producido con mayor calidad de edición</li>
+                <li>✅ Programas que se pueden repetir en diferentes horarios</li>
+                <li>✅ Menos presión que el en vivo (sin errores en tiempo real)</li>
+                <li>✅ Ideal para llenar espacios de programación</li>
+            </ul>
+        </div>
+
+        <h4>Opción A: Usando OBS Studio</h4>
+        <ol>
+            <li>Abre OBS Studio</li>
+            <li>En "Fuentes", haz clic en "+" y selecciona "Fuente de medios"</li>
+            <li>Navega hasta tu archivo de video (MP4, MKV, AVI, etc.)</li>
+            <li>Marcas las opciones:
+                <ul>
+                    <li>✅ "Reproducir cuando esté activo"</li>
+                    <li>✅ "Repetir cuando termine" (opcional para loop)</li>
+                </ul>
+            </li>
+            <li>Configura la transmisión como se explicó en la sección 4</li>
+            <li>Haz clic en "Iniciar Transmisión"</li>
+        </ol>
+
+        <h4>Opción B: Usando FFmpeg (Línea de Comandos)</h4>
+        <pre><code># Transmisión básica de video pre-grabado
+ffmpeg -re -i /ruta/a/tu/video.mp4 \
+  -c:v libx264 -preset veryfast -b:v 3000k \
+  -c:a aac -b:a 128k \
+  -f flv rtmp://localhost:1935/live/mibojera
+
+# Explicación de parámetros:
+# -re: Leer entrada a velocidad nativa (para simular vivo)
+# -i: Archivo de entrada
+# -c:v libx264: Codificador de video H.264
+# -preset veryfast: Velocidad de codificación
+# -b:v 3000k: Bitrate de video (ajustar según calidad)
+# -c:a aac: Codificador de audio AAC
+# -b:a 128k: Bitrate de audio
+# -f flv: Formato de salida para RTMP
+# rtmp://...: URL de tu servidor</code></pre>
+
+        <h4>Opción C: Lista de Reproducción con FFmpeg</h4>
+        <pre><code># Crear archivo de lista (lista_videos.txt)
+file '/ruta/video1.mp4'
+file '/ruta/video2.mp4'
+file '/ruta/video3.mp4'
+
+# Transmitir la lista en loop
+ffmpeg -re -f concat -safe 0 -i lista_videos.txt \
+  -c:v libx264 -preset veryfast -b:v 3000k \
+  -c:a aac -b:a 128k \
+  -f flv rtmp://localhost:1935/live/mibojera</code></pre>
+
+        <h4>Formatos de Video Soportados</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Formato</th>
+                    <th>Extensión</th>
+                    <th>Recomendado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>MP4 (H.264 + AAC)</td>
+                    <td>.mp4</td>
+                    <td>✅ Sí (mejor compatibilidad)</td>
+                </tr>
+                <tr>
+                    <td>MKV</td>
+                    <td>.mkv</td>
+                    <td>✅ Sí</td>
+                </tr>
+                <tr>
+                    <td>WebM</td>
+                    <td>.webm</td>
+                    <td>✅ Sí</td>
+                </tr>
+                <tr>
+                    <td>AVI</td>
+                    <td>.avi</td>
+                    <td>⚠️ Funciona (puede requerir transcodificación)</td>
+                </tr>
+                <tr>
+                    <td>MOV</td>
+                    <td>.mov</td>
+                    <td>✅ Sí</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="recommendation-box">
+            <strong>🏆 Consejos para Videos Pre-grabados</strong>
+            <ul>
+                <li>Exporta tus videos en <strong>MP4 con H.264 y AAC</strong> para máxima compatibilidad</li>
+                <li>Resolución recomendada: <strong>1280x720 (720p)</strong> para equilibrar calidad y ancho de banda</li>
+                <li>Usa <strong>-re en FFmpeg</strong> para transmitir a velocidad real (no más rápido)</li>
+                <li>Prepara una <strong>lista de reproducción</strong> para programación automática</li>
+                <li>Incluye <strong>intros y outros</strong> para dar identidad a tu canal</li>
+            </ul>
+        </div>
+
         <h3>6. Instalación Avanzada de Red5 Server (Opcional) <span class="badge badge-advanced">AVANZADO</span></h3>
 
         <div class="info-box">
@@ -1570,9 +2213,15 @@ chmod +x red5.sh
 # 5. Haz clic en Aplicar y Aceptar
 # 6. Inicia la transmisión</code></pre>
 
-        <h4>Paso 8: Crear Servicio Systemd (Opcional - Avanzado)</h4>
+        <!-- Paso 8 dividido en 8.1 y 8.2 -->
+        <h4>Paso 8.1: Crear Servicio Systemd (Para sistemas CON systemd)</h4>
         
-        <p>Para que Red5 se inicie automáticamente al arrancar el sistema:</p>
+        <div class="info-box">
+            <strong>📌 Nota sobre Systemd:</strong><br>
+            Este paso es para distribuciones que usan <strong>systemd</strong> (Debian, Ubuntu, Fedora, etc.). <strong>EterTICs está basado en Devuan que NO usa systemd</strong>. Si usas EterTICs, salta al Paso 8.2.
+        </div>
+
+        <p>Para que Red5 se inicie automáticamente al arrancar el sistema en distribuciones con systemd:</p>
 
         <pre><code># Crear archivo de servicio
 sudo nano /etc/systemd/system/red5.service
@@ -1603,6 +2252,76 @@ sudo systemctl start red5
 
 # Verificar estado
 sudo systemctl status red5</code></pre>
+
+        <h4>Paso 8.2: Crear Servicio Init.d (Para sistemas SIN systemd - Devuan/EterTICs)</h4>
+        
+        <div class="success-box">
+            <strong>✅ Este es el método para EterTICs/Devuan</strong><br>
+            Devuan y EterTICs usan <strong>SysV init</strong> en lugar de systemd. Este es el método correcto para tu sistema.
+        </div>
+
+        <pre><code># Crear script de inicio
+sudo nano /etc/init.d/red5
+
+# Contenido del archivo:
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          red5
+# Required-Start:    $network $local_fs
+# Required-Stop:     $network $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Red5 Streaming Server
+# Description:       Red5 Flash Streaming Server
+### END INIT INFO
+
+RED5_HOME=/opt/red5
+RED5_USER=tu-usuario
+PIDFILE=/var/run/red5.pid
+
+case "$1" in
+    start)
+        echo "Iniciando Red5..."
+        su - $RED5_USER -c "cd $RED5_HOME && ./red5.sh &"
+        echo $! > $PIDFILE
+        ;;
+    stop)
+        echo "Deteniendo Red5..."
+        if [ -f $PIDFILE ]; then
+            kill $(cat $PIDFILE)
+            rm $PIDFILE
+        fi
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    status)
+        if [ -f $PIDFILE ]; then
+            echo "Red5 está corriendo (PID: $(cat $PIDFILE))"
+        else
+            echo "Red5 no está corriendo"
+        fi
+        ;;
+    *)
+        echo "Uso: $0 {start|stop|restart|status}"
+        exit 1
+        ;;
+esac
+
+exit 0
+
+# Dar permisos de ejecución
+sudo chmod +x /etc/init.d/red5
+
+# Registrar el servicio
+sudo update-rc.d red5 defaults
+
+# Iniciar el servicio
+sudo /etc/init.d/red5 start
+
+# Verificar estado
+sudo /etc/init.d/red5 status</code></pre>
 
         <div class="recommendation-box">
             <strong>🏆 Comparación: MediaMTX vs Red5</strong>
@@ -2438,6 +3157,7 @@ tar -xvzf ngrok-v3-stable-linux-amd64.tgz
             <li><strong>Fediverse.tv:</strong> <a href="https://fediverse.tv" target="_blank">https://fediverse.tv</a></li>
             <li><strong>OBS Studio:</strong> <a href="https://obsproject.com" target="_blank">https://obsproject.com</a></li>
             <li><strong>EterTICs:</strong> <a href="https://etertics.org" target="_blank">https://etertics.org</a></li>
+            <li><strong>Telegram Bot API:</strong> <a href="https://core.telegram.org/bots/api" target="_blank">https://core.telegram.org/bots/api</a></li>
         </ul>
 
         <div class="success-box">
@@ -2516,28 +3236,42 @@ tar -xvzf ngrok-v3-stable-linux-amd64.tgz
             </div>
 
             <div class="bibliography-item">
-                <strong>7. DuckDNS</strong><br>
+                <strong>7. Telegram Bot API</strong><br>
+                API oficial de Telegram para crear bots y transmitir contenido.<br>
+                <a href="https://core.telegram.org/bots/api" target="_blank">https://core.telegram.org/bots/api</a><br>
+                <em>Documentación oficial de Telegram</em>
+            </div>
+
+            <div class="bibliography-item">
+                <strong>8. Liberatu Radio - Tu Radio en Telegram</strong><br>
+                Tutorial sobre configuración de streaming de radio hacia Telegram.<br>
+                <a href="https://liberaturadio.org/tu-radio-en-telegram/" target="_blank">https://liberaturadio.org/tu-radio-en-telegram/</a><br>
+                <em>Licencia: CC BY-SA</em>
+            </div>
+
+            <div class="bibliography-item">
+                <strong>9. DuckDNS</strong><br>
                 Servicio gratuito de DNS dinámico.<br>
                 <a href="https://www.duckdns.org" target="_blank">https://www.duckdns.org</a><br>
                 <em>Servicio gratuito sin licencia de software</em>
             </div>
 
             <div class="bibliography-item">
-                <strong>8. No-IP</strong><br>
+                <strong>10. No-IP</strong><br>
                 Servicio de DNS dinámico con opción gratuita y de pago.<br>
                 <a href="https://www.noip.com" target="_blank">https://www.noip.com</a><br>
                 <em>Servicio propietario con cliente gratuito</em>
             </div>
 
             <div class="bibliography-item">
-                <strong>9. Icecast Server</strong><br>
+                <strong>11. Icecast Server</strong><br>
                 Servidor de streaming de audio de código abierto.<br>
                 <a href="https://icecast.org" target="_blank">https://icecast.org</a><br>
                 <em>Licencia: GPL v2</em>
             </div>
 
             <div class="bibliography-item">
-                <strong>10. Raspberry Pi Foundation</strong><br>
+                <strong>12. Raspberry Pi Foundation</strong><br>
                 Documentación oficial para proyectos de hardware con Raspberry Pi.<br>
                 <a href="https://www.raspberrypi.org" target="_blank">https://www.raspberrypi.org</a><br>
                 <em>Documentación: CC BY-SA</em>
@@ -2546,21 +3280,21 @@ tar -xvzf ngrok-v3-stable-linux-amd64.tgz
             <h3>Fuentes de Hardware Libre</h3>
 
             <div class="bibliography-item">
-                <strong>11. Open Hardware Repository (OHR)</strong><br>
+                <strong>13. Open Hardware Repository (OHR)</strong><br>
                 Repositorio de diseños de hardware libre.<br>
                 <a href="https://www.ohwr.org" target="_blank">https://www.ohwr.org</a><br>
                 <em>Licencia: Varias licencias de hardware libre</em>
             </div>
 
             <div class="bibliography-item">
-                <strong>12. Arduino</strong><br>
+                <strong>14. Arduino</strong><br>
                 Plataforma de hardware y software libre para prototipado electrónico.<br>
                 <a href="https://www.arduino.cc" target="_blank">https://www.arduino.cc</a><br>
                 <em>Licencia: CC BY-SA (hardware), GPL/LGPL (software)</em>
             </div>
 
             <div class="bibliography-item">
-                <strong>13. Instructables - Audio Projects</strong><br>
+                <strong>15. Instructables - Audio Projects</strong><br>
                 Comunidad de proyectos DIY incluyendo audio y electrónica.<br>
                 <a href="https://www.instructables.com/circuits/audio/" target="_blank">https://www.instructables.com/circuits/audio/</a><br>
                 <em>Licencia: CC BY-NC-SA (varía por proyecto)</em>
@@ -2569,28 +3303,35 @@ tar -xvzf ngrok-v3-stable-linux-amd64.tgz
             <h3>Fuentes de Tutoriales y Guías</h3>
 
             <div class="bibliography-item">
-                <strong>14. Blog Fediverse.tv - Cómo transmitir desde OBS hacia FTV</strong><br>
+                <strong>16. Blog Fediverse.tv - Cómo transmitir desde OBS hacia FTV</strong><br>
                 Tutorial sobre configuración de OBS para transmitir a instancias PeerTube.<br>
                 <a href="https://blog.fediverse.tv/2022/07/24/como-transmitir-desde-obs-hacia-ftv-y-otras-instancias-de-peertube/" target="_blank">https://blog.fediverse.tv/2022/07/24/como-transmitir-desde-obs-hacia-ftv/</a><br>
                 <em>Licencia: CC BY-SA</em>
             </div>
 
             <div class="bibliography-item">
-                <strong>15. Debian Documentation</strong><br>
+                <strong>17. Debian Documentation</strong><br>
                 Documentación oficial de Debian GNU/Linux (base de EterTICs).<br>
                 <a href="https://www.debian.org/doc/" target="_blank">https://www.debian.org/doc/</a><br>
                 <em>Licencia: GPL/Documentación libre</em>
             </div>
 
             <div class="bibliography-item">
-                <strong>16. Free Software Foundation</strong><br>
+                <strong>18. Free Software Foundation</strong><br>
                 Definiciones y filosofía del Software Libre.<br>
                 <a href="https://www.fsf.org" target="_blank">https://www.fsf.org</a><br>
                 <em>Licencia: CC BY-SA</em>
             </div>
 
             <div class="bibliography-item">
-                <strong>17. UNESCO - Community Radio Handbook</strong><br>
+                <strong>19. Devuan Documentation</strong><br>
+                Documentación oficial de Devuan GNU/Linux (base de EterTICs, sin systemd).<br>
+                <a href="https://www.devuan.org" target="_blank">https://www.devuan.org</a><br>
+                <em>Licencia: GPL/Documentación libre</em>
+            </div>
+
+            <div class="bibliography-item">
+                <strong>20. UNESCO - Community Radio Handbook</strong><br>
                 Manual de radio comunitaria para el desarrollo social.<br>
                 <a href="https://en.unesco.org" target="_blank">https://en.unesco.org</a><br>
                 <em>Licencia: CC BY-SA</em>
@@ -2599,30 +3340,26 @@ tar -xvzf ngrok-v3-stable-linux-amd64.tgz
             <h3>Recursos Educativos</h3>
 
             <div class="bibliography-item">
-                <strong>18. Creative Commons</strong><br>
+                <strong>21. Creative Commons</strong><br>
                 Licencias abiertas para contenido educativo y creativo.<br>
                 <a href="https://creativecommons.org" target="_blank">https://creativecommons.org</a><br>
                 <em>Licencia: CC BY 4.0</em>
             </div>
 
             <div class="bibliography-item">
-                <strong>19. Wikimedia Commons</strong><br>
+                <strong>22. Wikimedia Commons</strong><br>
                 Repositorio de imágenes y medios con licencias libres.<br>
                 <a href="https://commons.wikimedia.org" target="_blank">https://commons.wikimedia.org</a><br>
                 <em>Licencia: Varias licencias libres (CC, GFDL, Dominio Público)</em>
             </div>
 
             <div class="bibliography-item">
-                <strong>20. The Noun Project</strong><br>
+                <strong>23. The Noun Project</strong><br>
                 Colección de iconos y símbolos con licencias abiertas.<br>
                 <a href="https://thenounproject.com" target="_blank">https://thenounproject.com</a><br>
                 <em>Licencia: CC BY / Licencia de pago</em>
             </div>
-            <div class="bibliography-item">
-                <strong>21. Asistencia de IA Conversacional</strong><br>
-                Herramienta de inteligencia artificial utilizada para redacción inicial, organización de contenido y generación de diagramas SVG. Todo el contenido fue verificado, editado y aprobado por autores humanos.<br>
-                <em>Nota: Las IA no son autoras ni responsables del contenido final.</em>
-            </div>
+
             <h3>Agradecimientos Especiales</h3>
 
             <div class="success-box">
@@ -2634,7 +3371,7 @@ tar -xvzf ngrok-v3-stable-linux-amd64.tgz
                     <li>✅ Traducirlo a otros idiomas</li>
                 </ul>
                 <p style="margin-top: 15px;"><strong>Si utilizas este manual, por favor da crédito a:</strong></p>
-                <p><em>"Sales y Lucena: EterTICs V13 Mbojera - Guía Completa para Radio y Televisora Comunitaria" bajo licencia CC BY-SA 4.0</em></p>
+                <p><em>"EterTICs V13 Mbojera - Guía Completa para Radio y Televisora Comunitaria" bajo licencia CC BY-SA 4.0</em></p>
             </div>
 
             <h3>Contacto y Contribuciones</h3>
@@ -2644,7 +3381,7 @@ tar -xvzf ngrok-v3-stable-linux-amd64.tgz
                 <p>Este manual es un proyecto vivo. Si encuentras errores, mejoras o quieres agregar contenido, por favor comparte tus contribuciones con la comunidad educativa.</p>
                 <p><strong>Licencia:</strong> Creative Commons Attribution-ShareAlike 4.0 International</p>
                 <p><strong>Año:</strong> 2026</p>
-                <p><strong>Versión del documento:</strong> 1.0</p>
+                <p><strong>Versión del documento:</strong> 4.2</p>
             </div>
         </div>
     </section>
@@ -2663,15 +3400,14 @@ tar -xvzf ngrok-v3-stable-linux-amd64.tgz
     <div class="footer">
         <p><strong>EterTICs V13 Mbojera - Guía Completa para Radio y Televisora Comunitaria</strong></p>
         <p>Licencia: <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons CC BY-SA 4.0</a></p>
-        <p>Desarrollado para Proyectos Comunitarios con espíritu comunitario</p>
+        <p>Desarrollado para estudiantes de secundaria con espíritu comunitario</p>
         <p style="margin-top: 20px;">
             <em>"La tecnología debe servir a la comunidad, no a las corporaciones"</em>
         </p>
         <p style="margin-top: 10px; font-size: 0.8em;">
-            Versión 4.0 - Actualizado con PeerTube/FTV y Bibliografía Completa - 2026
+            Versión 4.2 - Actualizado con Telegram (archivos + cámara en vivo) - 2026
         </p>
     </div>
-<div class="info-box" style="background-color: #faf5ff; border-left-color: #9f7aea;"> </div>
 
 </body>
 </html>
