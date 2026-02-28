@@ -1050,109 +1050,362 @@ sudo umount ~/mount-point-eter-tic</code></pre>
         <p>Crea un horario semanal con diferentes programas, asigna contenido y activa el cronograma para emisión autónoma.</p>
 
         <!-- Conexión de Micrófonos -->
-        <h3>Conexión de Micrófonos y Ajustes para Transmisión en Vivo</h3>
+<h3>Conexión de Micrófonos y Ajustes para Transmisión en Vivo</h3>
 
-        <div class="info-box">
-            <strong>🎙️ Tipos de Conexión de Micrófono</strong>
-            <ul>
-                <li><strong>USB:</strong> Plug & play, ideal para principiantes</li>
-                <li><strong>Jack 3.5mm:</strong> Entrada de micrófono de la PC</li>
-                <li><strong>XLR:</strong> Requiere interfaz de audio o mezcladora externa</li>
-            </ul>
-        </div>
+<div class="info-box">
+    <strong>🎙️ Tipos de Conexión de Micrófono</strong>
+    <ul>
+        <li><strong>USB:</strong> Plug & play, ideal para principiantes</li>
+        <li><strong>Jack 3.5mm:</strong> Entrada de micrófono de la PC</li>
+        <li><strong>XLR:</strong> Requiere interfaz de audio o mezcladora externa</li>
+    </ul>
+</div>
 
-        <h4>Paso 1: Conexión Física</h4>
-        <ol>
-            <li><strong>Micrófono USB:</strong> Conecta directamente a cualquier puerto USB libre</li>
-            <li><strong>Micrófono Jack 3.5mm:</strong> Conecta al puerto rosa (mic-in) de la PC</li>
-            <li><strong>Micrófono XLR:</strong> Conecta a interfaz de audio → USB → PC</li>
-        </ol>
+<h4>Paso 1: Conexión Física</h4>
+<ol>
+    <li><strong>Micrófono USB:</strong> Conecta directamente a cualquier puerto USB libre</li>
+    <li><strong>Micrófono Jack 3.5mm:</strong> Conecta al puerto rosa (mic-in) de la PC</li>
+    <li><strong>Micrófono XLR:</strong> Conecta a interfaz de audio → USB → PC</li>
+</ol>
 
-        <h4>Paso 2: Configurar Entrada de Audio en EterTICs</h4>
-        <pre><code># Abrir configuración de audio
+<h4>Paso 2: Sistemas de Audio en EterTICs</h4>
+
+<div class="recommendation-box">
+    <strong>🎛️ EterTICs Incluye Múltiples Sistemas de Audio</strong><br>
+    <p>Dependiendo de tu configuración, puedes usar:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Sistema</th>
+                <th>Uso Recomendado</th>
+                <th>Herramientas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>JACK</strong></td>
+                <td>Radio profesional, baja latencia</td>
+                <td>QjackCtl, Cadence, Catia</td>
+            </tr>
+            <tr>
+                <td><strong>PulseAudio/PipeWire</strong></td>
+                <td>Configuración sencilla, escritorio</td>
+                <td>Myxer, pavucontrol</td>
+            </tr>
+            <tr>
+                <td><strong>Noisetorch-ng</strong></td>
+                <td>Supresión de ruido en tiempo real</td>
+                <td>Noisetorch (cualquier sistema)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h4>Opción A: Configurar JACK (Recomendado para Radio)</h4>
+
+<div class="info-box">
+    <strong>🎯 ¿Por Qué JACK?</strong><br>
+    <p>JACK Audio Connection Kit es el estándar profesional para audio en Linux:</p>
+    <ul>
+        <li>✅ Baja latencia (ideal para transmisión en vivo)</li>
+        <li>✅ Enrutamiento flexible entre aplicaciones</li>
+        <li>✅ Conexión de hardware y software</li>
+        <li>✅ Estable para streaming 24/7</li>
+    </ul>
+</div>
+
+<pre><code># Abrir la interfaz de control de JACK
+qjackctl
+
+# O desde el menú:
+# Sonido y Video → QjackCtl</code></pre>
+
+<ol>
+    <li>Abre <strong>QjackCtl</strong></li>
+    <li>Haz clic en <strong>"Setup"</strong></li>
+    <li>Selecciona tu dispositivo de entrada (micrófono) y salida</li>
+    <li>Sample Rate: 44100 o 48000 Hz</li>
+    <li>Frames/Period: 256 o 512 (menor = menor latencia)</li>
+    <li>Haz clic en <strong>"OK"</strong> luego <strong>"Start"</strong></li>
+    <li>Verás <strong>"JACK started successfully"</strong></li>
+</ol>
+
+<h4>Opción B: Configurar Myxer (PulseAudio/PipeWire)</h4>
+
+<div class="info-box">
+    <strong>🎚️ ¿Qué es Myxer?</strong><br>
+    <p>Myxer es un mezclador de volúmenes gráfico para PulseAudio/PipeWire incluido en EterTICs:</p>
+    <ul>
+        <li>✅ Interfaz sencilla e intuitiva</li>
+        <li>✅ Control de volúmenes por aplicación</li>
+        <li>✅ Ideal si no necesitas la complejidad de JACK</li>
+        <li>✅ Funciona bien con OBS y navegadores</li>
+    </ul>
+</div>
+
+<pre><code># Abrir Myxer desde terminal
+myxer
+
+# O desde el menú:
+# Sonido y Video → Myxer</code></pre>
+
+<ol>
+    <li>Abre <strong>Myxer</strong></li>
+    <li>En la pestaña <strong>"Input Devices"</strong>, selecciona tu micrófono</li>
+    <li>Ajusta el volumen de entrada con el slider</li>
+    <li>En <strong>"Output Devices"</strong>, verifica tu salida de audio</li>
+    <li>En <strong>"Playback Streams"</strong>, verás las aplicaciones activas (OBS, navegador, etc.)</li>
+    <li>Puedes ajustar el volumen de cada aplicación individualmente</li>
+    <li>Marca <strong>"Silence"</strong> para mutear aplicaciones específicas</li>
+</ol>
+
+<div class="diagram-container">
+    <svg viewBox="0 0 700 280" class="hardware-diagram">
+        <rect width="700" height="280" fill="#f7fafc" stroke="#e2e8f0" stroke-width="2"/>
+        
+        <rect x="30" y="100" width="120" height="70" fill="#c53030" stroke="#2d3748" stroke-width="2"/>
+        <text x="90" y="130" text-anchor="middle" fill="white" font-size="10">Micrófono</text>
+        <text x="90" y="150" text-anchor="middle" fill="white" font-size="9">(Entrada)</text>
+        
+        <rect x="200" y="40" width="140" height="60" fill="#3182ce" stroke="#2d3748" stroke-width="2"/>
+        <text x="270" y="65" text-anchor="middle" fill="white" font-size="10">Myxer</text>
+        <text x="270" y="85" text-anchor="middle" fill="white" font-size="9">(Mezclador)</text>
+        
+        <rect x="200" y="160" width="140" height="60" fill="#38a169" stroke="#2d3748" stroke-width="2"/>
+        <text x="270" y="185" text-anchor="middle" fill="white" font-size="10">Noisetorch</text>
+        <text x="270" y="205" text-anchor="middle" fill="white" font-size="9">(Ruido)</text>
+        
+        <rect x="400" y="100" width="140" height="70" fill="#805ad5" stroke="#2d3748" stroke-width="2"/>
+        <text x="470" y="130" text-anchor="middle" fill="white" font-size="10">JACK/Pulse</text>
+        <text x="470" y="150" text-anchor="middle" fill="white" font-size="9">(Sistema Audio)</text>
+        
+        <rect x="590" y="100" width="100" height="70" fill="#dd6b20" stroke="#2d3748" stroke-width="2"/>
+        <text x="640" y="130" text-anchor="middle" fill="white" font-size="10">Icecast/OBS</text>
+        <text x="640" y="150" text-anchor="middle" fill="white" font-size="9">(Stream)</text>
+        
+        <line x1="150" y1="135" x2="200" y2="135" stroke="#2d3748" stroke-width="2"/>
+        <line x1="340" y1="70" x2="400" y2="115" stroke="#2d3748" stroke-width="2"/>
+        <line x1="340" y1="190" x2="400" y2="155" stroke="#2d3748" stroke-width="2"/>
+        <line x1="540" y1="135" x2="590" y2="135" stroke="#2d3748" stroke-width="2"/>
+        
+        <polygon points="200,135 190,130 190,140" fill="#2d3748"/>
+        <polygon points="400,115 390,110 390,120" fill="#2d3748"/>
+        <polygon points="400,155 390,150 390,160" fill="#2d3748"/>
+        <polygon points="590,135 580,130 580,140" fill="#2d3748"/>
+    </svg>
+    <p class="diagram-caption">Figura 7: Flujo de audio con Myxer + Noisetorch + JACK/PulseAudio</p>
+</div>
+
+<h4>Opción C: Supresión de Ruido con Noisetorch-ng</h4>
+
+<div class="success-box">
+    <strong>🎤 ¿Qué es Noisetorch-ng?</strong><br>
+    <p>Noisetorch-ng crea un <strong>micrófono virtual con supresión de ruido en tiempo real</strong> usando IA:</p>
+    <ul>
+        <li>✅ Elimina ruido de fondo (ventiladores, teclado, tráfico)</li>
+        <li>✅ Funciona con cualquier micrófono</li>
+        <li>✅ Bajo uso de CPU</li>
+        <li>✅ Compatible con JACK, PulseAudio y PipeWire</li>
+        <li>✅ Ideal para transmisiones profesionales</li>
+    </ul>
+</div>
+
+<pre><code># Abrir Noisetorch desde terminal
+noisetorch
+
+# O desde el menú:
+# Sonido y Video → Noisetorch</code></pre>
+
+<ol>
+    <li>Abre <strong>Noisetorch-ng</strong></li>
+    <li>Haz clic en <strong>"Select Microphone"</strong></li>
+    <li>Selecciona tu micrófono físico de la lista</li>
+    <li>Ajusta el <strong>Threshold</strong> (umbral):
+        <ul>
+            <li>Más alto = más supresión de ruido</li>
+            <li>Más bajo = más sonido natural</li>
+            <li>Recomendado: -50dB a -30dB</li>
+        </ul>
+    </li>
+    <li>Haz clic en <strong>"Load Noisetorch"</strong></li>
+    <li>Se creará un nuevo dispositivo: <strong>"NoiseTorch Microphone"</strong></li>
+    <li>En tu software de streaming (OBS, Icecast), selecciona <strong>"NoiseTorch Microphone"</strong> como entrada</li>
+    <li>¡El ruido de fondo será eliminado en tiempo real!</li>
+</ol>
+
+<div class="warning-box">
+    <strong>⚠️ Consejos para Noisetorch</strong>
+    <ul>
+        <li><strong>Orden de carga:</strong> Inicia Noisetorch ANTES de abrir OBS/Icecast</li>
+        <li><strong>Threshold:</strong> Comienza en -40dB y ajusta según necesites</li>
+        <li><strong>Prueba primero:</strong> Habla y haz ruido para verificar la supresión</li>
+        <li><strong>Compatibilidad:</strong> Funciona con JACK, PulseAudio y PipeWire</li>
+        <li><strong>Desactivar:</strong> Click en "Unload Noisetorch" cuando termines</li>
+    </ul>
+</div>
+
+<h4>Paso 3: Conectar Entradas y Salidas</h4>
+
+<h5>Para JACK (QjackCtl):</h5>
+<pre><code># Abrir conexiones JACK
+qjackctl --connect
+
+# O desde la ventana de QjackCtl, click en "Connect"</code></pre>
+<ol>
+    <li>En <strong>"Readable Clients"</strong>: Busca tu micrófono (<code>system:capture_1</code>) o Noisetorch</li>
+    <li>En <strong>"Writable Clients"</strong>: Busca tu software (<code>icecast2:input</code> o <code>obs:monitor</code>)</li>
+    <li>Selecciona entrada y salida, haz clic en <strong>"Connect"</strong></li>
+    <li>Verás una línea cuando esté conectado</li>
+</ol>
+
+<h5>Para PulseAudio/PipeWire (Myxer):</h5>
+<ol>
+    <li>En Myxer, ve a <strong>"Input Devices"</strong></li>
+    <li>Selecciona <strong>"NoiseTorch Microphone"</strong> si usas Noisetorch</li>
+    <li>Ajusta el volumen al 80-90% (evita 100% para prevenir clipping)</li>
+    <li>En <strong>"Playback Streams"</strong>, verifica que OBS/Icecast esté recibiendo audio</li>
+</ol>
+
+<h4>Paso 4: Ajustar Niveles de Entrada</h4>
+<pre><code># Ver niveles en tiempo real (JACK)
+# En QjackCtl, observa los medidores
+
+# Ver niveles (PulseAudio)
 pavucontrol
+# Ve a pestaña "Input Devices"</code></pre>
 
-# O desde terminal
-alsamixer</code></pre>
-        <ol>
-            <li>En <strong>pavucontrol</strong>, ve a la pestaña "Dispositivos de entrada"</li>
-            <li>Selecciona tu micrófono de la lista</li>
-            <li>Ajusta el volumen de entrada (evita que llegue al rojo/clipping)</li>
-            <li>Prueba hablando y observa los medidores de nivel</li>
-        </ol>
+<ol>
+    <li>Con el sistema de audio corriendo, habla por el micrófono</li>
+    <li>Observa los medidores en QjackCtl, Myxer o tu software</li>
+    <li>Ajusta para que esté entre <strong>-12dB y -6dB</strong> (zona verde/amarilla)</li>
+    <li><strong>Evita 0dB (rojo)</strong> - causa distorsión</li>
+    <li>Si usas Noisetorch, verifica que el ruido de fondo se reduzca</li>
+</ol>
 
-        <h4>Paso 3: Configurar OBS o Mezcladora para Streaming</h4>
-        <ol>
-            <li><strong>En OBS Studio:</strong>
-                <ul>
-                    <li>Añade fuente: "Captura de entrada de audio"</li>
-                    <li>Selecciona tu micrófono</li>
-                    <li>Ajusta niveles en el mezclador de OBS</li>
-                    <li>Activa filtros: Compresor, Ruido, Ganancia</li>
-                </ul>
-            </li>
-            <li><strong>En Mezcladora Hardware:</strong>
-                <ul>
-                    <li>Conecta salida principal a Line-in de la PC</li>
-                    <li>Ajusta ganancia de cada canal</li>
-                    <li>Usa ecualización para claridad vocal</li>
-                </ul>
-            </li>
-        </ol>
+<h4>Paso 5: Configurar OBS para Streaming</h4>
+<ol>
+    <li><strong>Con JACK:</strong>
+        <ul>
+            <li>OBS → Configuración → Audio</li>
+            <li>Sistema de audio: <strong>JACK</strong></li>
+            <li>O añade fuente: "Captura de entrada JACK"</li>
+            <li>Conecta en QjackCtl: <code>system:capture</code> → <code>obs:input</code></li>
+        </ul>
+    </li>
+    <li><strong>Con PulseAudio/PipeWire:</strong>
+        <ul>
+            <li>OBS → Configuración → Audio</li>
+            <li>Dispositivo de audio: <strong>NoiseTorch Microphone</strong></li>
+            <li>O usa "Captura de entrada de audio (PulseAudio)"</li>
+            <li>Ajusta niveles en el mezclador de OBS</li>
+        </ul>
+    </li>
+    <li><strong>Filtros recomendados en OBS:</strong>
+        <ul>
+            <li>Compresor (Ratio 3:1, Threshold -20dB)</li>
+            <li>Supresor de ruido (si no usas Noisetorch)</li>
+            <li>Ganancia (si el nivel es muy bajo)</li>
+            <li>Ecualizador (Boost 2-4kHz para claridad)</li>
+        </ul>
+    </li>
+</ol>
 
-        <h4>Paso 4: Ajustes Recomendados para Voz</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Parámetro</th>
-                    <th>Valor Recomendado</th>
-                    <th>Propósito</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Nivel de Entrada</td>
-                    <td>-12dB a -6dB</td>
-                    <td>Evitar distorsión</td>
-                </tr>
-                <tr>
-                    <td>Compresor</td>
-                    <td>Ratio 3:1, Threshold -20dB</td>
-                    <td>Uniformizar volumen</td>
-                </tr>
-                <tr>
-                    <td>Reducción de Ruido</td>
-                    <td>-10dB a -15dB</td>
-                    <td>Eliminar ruido de fondo</td>
-                </tr>
-                <tr>
-                    <td>Ecualización</td>
-                    <td>Boost 2-4kHz, Cut &lt;100Hz</td>
-                    <td>Claridad vocal</td>
-                </tr>
-            </tbody>
-        </table>
+<h4>Paso 6: Ajustes Recomendados</h4>
+<table>
+    <thead>
+        <tr>
+            <th>Parámetro</th>
+            <th>Valor Recomendado</th>
+            <th>Herramienta</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Nivel de Entrada</td>
+            <td>-12dB a -6dB</td>
+            <td>Myxer / QjackCtl</td>
+        </tr>
+        <tr>
+            <td>Supresión de Ruido</td>
+            <td>-40dB Threshold</td>
+            <td>Noisetorch-ng</td>
+        </tr>
+        <tr>
+            <td>Sample Rate</td>
+            <td>44100 Hz o 48000 Hz</td>
+            <td>QjackCtl</td>
+        </tr>
+        <tr>
+            <td>Buffer Size</td>
+            <td>256 o 512 frames</td>
+            <td>QjackCtl</td>
+        </tr>
+        <tr>
+            <td>Compresor</td>
+            <td>Ratio 3:1, Threshold -20dB</td>
+            <td>OBS Filters</td>
+        </tr>
+        <tr>
+            <td>Ecualización</td>
+            <td>Boost 2-4kHz, Cut &lt;100Hz</td>
+            <td>OBS Filters</td>
+        </tr>
+    </tbody>
+</table>
 
-        <h4>Paso 5: Prueba de Transmisión</h4>
-        <ol>
-            <li>Inicia el servidor Icecast</li>
-            <li>Configura OBS o tu mezcladora para enviar al stream</li>
-            <li>Inicia la transmisión de prueba</li>
-            <li>Abre otra PC o dispositivo y escucha tu stream</li>
-            <li>Ajusta niveles según sea necesario</li>
-            <li>¡Listo para transmitir en vivo!</li>
-        </ol>
+<h4>Paso 7: Prueba de Transmisión</h4>
+<ol>
+    <li>Inicia el sistema de audio (JACK o PulseAudio)</li>
+    <li>Inicia <strong>Noisetorch</strong> (si lo usas) y carga tu micrófono</li>
+    <li>Inicia <strong>Myxer</strong> o <strong>QjackCtl</strong> para verificar niveles</li>
+    <li>Inicia el servidor <strong>Icecast2</strong></li>
+    <li>Conecta las entradas/salidas (JACK Connections o Myxer)</li>
+    <li>Inicia OBS y configura la fuente de audio</li>
+    <li>Inicia la transmisión de prueba</li>
+    <li>Escucha tu stream desde otro dispositivo</li>
+    <li>Ajusta niveles según sea necesario</li>
+    <li>¡Listo para transmitir en vivo!</li>
+</ol>
 
-        <div class="warning-box">
-            <strong>⚠️ Consejos para Transmisión en Vivo</strong>
-            <ul>
-                <li>Siempre haz una prueba de audio antes de salir al aire</li>
-                <li>Mantén una distancia constante del micrófono (10-15 cm)</li>
-                <li>Usa pop filter para evitar explosivas (P, B, T)</li>
-                <li>Monitorea tu transmisión desde otro dispositivo</li>
-                <li>Ten un plan B (música de respaldo) por si hay problemas técnicos</li>
-            </ul>
-        </div>
+<div class="success-box">
+    <strong>🎉 Configuración Profesional Completa</strong><br>
+    <p>Con <strong>JACK + Myxer + Noisetorch-ng</strong> tienes:</p>
+    <ul>
+        <li>✅ Audio profesional de baja latencia (JACK)</li>
+        <li>✅ Mezclador gráfico sencillo (Myxer)</li>
+        <li>✅ Supresión de ruido con IA (Noisetorch-ng)</li>
+        <li>✅ Flexibilidad para cambiar entre sistemas</li>
+        <li>✅ Calidad de broadcast profesional</li>
+    </ul>
+</div>
+
+<div class="warning-box">
+    <strong>⚠️ Consejos Finales para Transmisión en Vivo</strong>
+    <ul>
+        <li><strong>Orden de inicio:</strong> JACK/Pulse → Noisetorch → Myxer → OBS → Icecast</li>
+        <li><strong>Prueba siempre antes de salir al aire:</strong> Verifica niveles y calidad</li>
+        <li><strong>Guarda configuraciones:</strong> QjackCtl → Setup → Save / Myxer guarda automáticamente</li>
+        <li><strong>Monitorea con audífonos:</strong> Escucha lo que están escuchando tus oyentes</li>
+        <li><strong>Ten un plan B:</strong> Música de respaldo por si hay problemas técnicos</li>
+        <li><strong>Distancia del micrófono:</strong> 10-15 cm constante</li>
+        <li><strong>Usa pop filter:</strong> Para evitar explosivas (P, B, T)</li>
+    </ul>
+</div>
+
+<div class="info-box">
+    <strong>🎛️ Herramientas de Audio en EterTICs</strong>
+    <ul>
+        <li><strong>QjackCtl:</strong> Control principal de JACK</li>
+        <li><strong>Myxer:</strong> Mezclador para PulseAudio/PipeWire</li>
+        <li><strong>Noisetorch-ng:</strong> Supresión de ruido con IA</li>
+        <li><strong>Cadence:</strong> Gestión avanzada de JACK</li>
+        <li><strong>Catia:</strong> Conexiones JACK visuales (patchbay)</li>
+        <li><strong>Patchage:</strong> Visualizador de conexiones en tiempo real</li>
+        <li><strong>JACK Mixer:</strong> Mezcladora dentro de JACK</li>
+        <li><strong>pavucontrol:</strong> Control de PulseAudio (alternativa a Myxer)</li>
+        <li><strong>Hydrogen:</strong> Caja de ritmos para intros/identificadores</li>
+    </ul>
+</div>
 
         <h3>Interacción con la Audiencia</h3>
 
